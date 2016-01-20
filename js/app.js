@@ -26,8 +26,25 @@ angular.module('ScrambleApp')
 	 */
 	$scope.newScrambledWord = function () {
 		console.log("running newScrambledWord");
-		// clear any current scramble
+
+		var randomWordUrl = "http://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=proper-noun,proper-noun-plural,proper-noun-posessive,prefix,suffix,family-name,given-name&minCorpusCount=1000&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
+
 		// fetch new word
+		$http({
+			method: 'GET',
+			url: randomWordUrl,
+			headers: {
+				'Content-Type': undefined
+			}
+		}).then(function successCallback (response) {
+			console.log("success response.data.word", response.data.word);
+			$scope.secret = response.data.word;
+			console.log("$scope.secret", $scope.secret);
+
+			}, function errorCallback(response){
+				console.log("problem with $http.get: ", response);
+			});
+
 		// scramble word
 		// display scrambled word
 
