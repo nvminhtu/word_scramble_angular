@@ -1,0 +1,14 @@
+/* style.less */
+body {
+  background-color: teal;
+  color: white;
+}
+.game {
+  padding: 10%;
+}
+.game h1 {
+  text-align: center;
+  margin: 0 auto;
+}
+
+/*# sourceMappingURL=style.css.map */
