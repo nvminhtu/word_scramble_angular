@@ -5,8 +5,6 @@ var ScrambleApp = angular.module('ScrambleApp', []);
 angular.module('ScrambleApp')
 .controller('GameCtrl', ['$scope', '$http', function ($scope, $http) {
 
-	console.log("Game Controller");
-
 	// keeping all strings in one place
 	var __strings = {
 		START: "Start typing to guess the unscrambled word",
@@ -33,8 +31,13 @@ angular.module('ScrambleApp')
 	 */
 
 	$scope.newScrambledWord = function () {
-		// clear old secret word
+
+		// clear old words if necessary
 		secret = '';
+		$scope.scrambled = '';
+		$scope.candidate = '';
+		// need to replace with two-way data binding 
+		document.getElementById("display-guess").value = '';
 
 		// assemble url for ajax call
 		var maxWordLength = 10;
@@ -59,7 +62,6 @@ angular.module('ScrambleApp')
 		}).then(function success (response) {
 		
 			secret = response.data.word;
-			console.log("secret", secret);
 		
 			if (secret) {
 				// scramble word and display
@@ -67,7 +69,7 @@ angular.module('ScrambleApp')
 			}
 
 		}, function error(response){
-			console.log("problem with $http: ", response);
+			console.log("There has been a problem problem with $http: ", response);
 		});
 	};
 
@@ -76,6 +78,7 @@ angular.module('ScrambleApp')
 	 */
 
 	$scope.scrambleWord = function (origWord) {
+
 		var scrambledWord =  [];
 		var randIndex = 0;
 		var letterToSwap = '';
@@ -98,17 +101,14 @@ angular.module('ScrambleApp')
 	 * returns Boolean to indicate match or not
 	 * called with every keyUp in input field
 	 */
-	$scope.checkNewInput = function (event) {
-		console.log("running checkNewInput");
+	$scope.checkNewInput = function ($event) {
 
-		// TODO smarter two-way data binding
-		// get latest guess
+		// get latest guess (inelegant method, need to do two-way data binding)
 		$scope.candidate = document.getElementById("display-guess").value;
-		console.log("$scope.candidate", $scope.candidate);
 
-		// check for matching of user's candidate word and secret word
+		// check candidate word for length, match etc.
 		if ($scope.candidate.toUpperCase() == secret.toUpperCase()) {
-			console.log ("match");
+			// check for matching of user's candidate word and secret word
 			$scope.result = __strings['CONGRATS_MATCH'];
 
 		} else if ($scope.candidate.length > secret.length) {

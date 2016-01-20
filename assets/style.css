@@ -7,12 +7,16 @@ body {
   padding: 10%;
   text-align: center;
 }
-.game h1 {
-  margin: 0 auto;
-}
 .game article {
   border: solid 2px white;
   padding: 20px;
+  margin: 10px;
+}
+.game a {
+  color: white;
+}
+.game h1 {
+  margin: 0 auto;
 }
 .game .display-word {
   display: inline-block;
