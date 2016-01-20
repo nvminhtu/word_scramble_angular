@@ -5,10 +5,29 @@ body {
 }
 .game {
   padding: 10%;
+  text-align: center;
 }
 .game h1 {
-  text-align: center;
   margin: 0 auto;
+}
+.game article {
+  border: solid 2px white;
+  padding: 20px;
+}
+.game .display-word {
+  background-color: white;
+  color: teal;
+  padding: 5px;
+}
+.game button {
+  background-color: darkslategray;
+  color: white;
+}
+.game article,
+.game span,
+.game button,
+.game input {
+  border-radius: 10px;
 }
 
 /*# sourceMappingURL=style.css.map */
