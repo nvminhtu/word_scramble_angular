@@ -11,6 +11,7 @@
 
 	<!-- Angular files via cdn -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.17/angular.min.js"></script>
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.17/angular.js"></script> -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.17/angular-route.min.js"></script>
 
 	<!-- Word Scramble app files -->
@@ -24,15 +25,16 @@
 
 		<article ng-controller="GameCtrl">
 			<h2>Scrambled Word</h2>
-			<span id="display-scramble" class="display-word">sample</span>
+			<span id="display-scramble" class="display-word">{{scrambled}}</span>
 
 			<h2>Your guess</h2>
-			<input id="display-guess" class="display-word" type="text">
+			<input id="display-guess" class="display-word" type="text" value="{{candidate}}">
 
-			<h2>Result</h2>
-			<span id="display-result"></span>
+			<br><br>
+			<span id="display-result">{{result}}</span>
+			<br><br>
 
-			<button>Get New Word</button>
+			<button ng-click="newScrambledWord()">Get New Word</button>
 			
 		</article>
 	</section>
