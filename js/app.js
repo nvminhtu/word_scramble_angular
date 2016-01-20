@@ -8,7 +8,7 @@ angular.module('ScrambleApp')
 	// keeping all strings in one place
 	var __strings = {
 		START: "Start typing to guess the unscrambled word",
-		CONTINUE: "See if you can match the unscrambled word",
+		CONTINUE: "See if you can unscramble the word",
 		CONGRATS_MATCH: "Congratulations! You matched the word!",
 		SCRAMBLE_START: "",
 		YOUR_GUESS: "",

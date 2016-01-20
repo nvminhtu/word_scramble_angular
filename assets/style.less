@@ -1,19 +1,21 @@
 /* style.less */
-@gameBackgroundColor: teal;
+@gameBackgroundColor: rgba(20,20,20,.9);
 @gameContrastColor: white;
-@gameAltBackgroundColor: darkslategray;
+@gameAltBackgroundColor: gray;
 
 body {
-	background-color: @gameBackgroundColor;
+	background-image: url(letters.jpg);
+	background-size: cover;
 	color: @gameContrastColor;
 }
 
 .game {
+	background-color: rgba(0,0,0,.2);
 	padding: 10%;
 	text-align: center;
 	
 	article {
-		border: solid 2px @gameContrastColor;
+		background-color: @gameBackgroundColor;
 		padding: 20px;
 		margin: 10px;
 	}
@@ -34,6 +36,7 @@ body {
 		text-transform: uppercase;
 		text-align: center;
 		padding: 5px;
+		min-height: 18px;
 		width: 50%;
 	}
 

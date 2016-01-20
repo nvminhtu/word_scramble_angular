@@ -1,14 +1,16 @@
 /* style.less */
 body {
-  background-color: teal;
+  background-image: url(letters.jpg);
+  background-size: cover;
   color: white;
 }
 .game {
+  background-color: rgba(0, 0, 0, 0.2);
   padding: 10%;
   text-align: center;
 }
 .game article {
-  border: solid 2px white;
+  background-color: rgba(20, 20, 20, 0.9);
   padding: 20px;
   margin: 10px;
 }
@@ -21,14 +23,15 @@ body {
 .game .display-word {
   display: inline-block;
   background-color: white;
-  color: teal;
+  color: rgba(20, 20, 20, 0.9);
   text-transform: uppercase;
   text-align: center;
   padding: 5px;
+  min-height: 18px;
   width: 50%;
 }
 .game button {
-  background-color: darkslategray;
+  background-color: gray;
   color: white;
 }
 .game article,
