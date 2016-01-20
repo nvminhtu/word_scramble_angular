@@ -16,10 +16,68 @@ angular.module('ScrambleApp')
 		TOO_LONG: "Whoops! You've entered more letters than are in the word!"
 	};
 
-	$scope.secret = '';
+	var secret = '';
 	$scope.scrambled = __strings['SCRAMBLE'];
 	$scope.result = __strings['START'];
 	$scope.candidate = __strings['YOUR_GUESS'];
+
+	/**
+	 * get newRandomWord from wordnik api
+	 * return random word as a string
+	 */
+
+	$scope.newRandomWord = function () {
+		// clear old secret word
+		secret = '';
+
+		// assemble url for ajax call
+		var maxWordLength = 10;
+		var randomWordUrl = "http://api.wordnik.com/v4/words.json/randomWord?" +
+			"hasDictionaryDef=true" + 
+			"&excludePartOfSpeech=proper-noun,proper-noun-plural,proper-noun-posessive,prefix,suffix,family-name,given-name" + 
+			"&minCorpusCount=10000" +
+			"&maxCorpusCount=-1" +
+			"&minDictionaryCount=1" +
+			"&maxDictionaryCount=-1" +
+			"&minLength=5" +
+			"&maxLength=" + maxWordLength +
+			"&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
+
+		// get new random word
+		$http({
+			method: 'GET',
+			url: randomWordUrl,
+			headers: {
+				'Content-Type': undefined
+			}
+		}).then(function success (response) {
+			console.log("success response.data.word", response.data.word);
+		
+			secret = response.data.word;
+			console.log("secret", secret);
+		
+			if (secret) {
+				// scramble word
+				$scope.scrambled = $scope.scrambleWord(secret);
+				console.log("$scope.scrambled", $scope.scrambled);
+			}
+
+			}, function error(response){
+				console.log("problem with $http.get: ", response);
+			});
+	};
+
+	/**
+	 * scrambleWord randomly re-order letters
+	 */
+
+	$scope.scrambleWord = function (origWord) {
+		console.log("running scrambleWord");
+		console.log("origWord", origWord);
+		// TODO actually scramble word
+		return origWord;
+
+	};
 
 	/**
 	 * get and display newScrambledWord
@@ -27,27 +85,10 @@ angular.module('ScrambleApp')
 	$scope.newScrambledWord = function () {
 		console.log("running newScrambledWord");
 
-		var randomWordUrl = "http://api.wordnik.com/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=proper-noun,proper-noun-plural,proper-noun-posessive,prefix,suffix,family-name,given-name&minCorpusCount=1000&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5";
-
-		// fetch new word
-		$http({
-			method: 'GET',
-			url: randomWordUrl,
-			headers: {
-				'Content-Type': undefined
-			}
-		}).then(function successCallback (response) {
-			console.log("success response.data.word", response.data.word);
-			$scope.secret = response.data.word;
-			console.log("$scope.secret", $scope.secret);
-
-			}, function errorCallback(response){
-				console.log("problem with $http.get: ", response);
-			});
-
-		// scramble word
-		// display scrambled word
-
+		// get new random word
+		$scope.newRandomWord();
+		console.log("secret", secret);
+		console.log("$scope.scrambled", $scope.scrambled);
 
 	};
 
@@ -74,7 +115,7 @@ angular.module('ScrambleApp')
 
 		// check updated candidate word
 
-		matchedWord = $scope.checkWordMatch($scope.secret, $scope.candidate);
+		matchedWord = $scope.checkWordMatch(secret, $scope.candidate);
 	}
 
 	// Broken out of the word-entry loop
