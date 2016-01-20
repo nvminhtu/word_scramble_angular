@@ -1,8 +1,11 @@
 /* style.less */
+@gameBackgroundColor: teal;
+@gameContrastColor: white;
+@gameAltBackgroundColor: darkslategray;
 
 body {
-	background-color: teal;
-	color: white;
+	background-color: @gameBackgroundColor;
+	color: @gameContrastColor;
 }
 
 .game {
@@ -14,20 +17,23 @@ body {
 	}
 	
 	article {
-		border: solid 2px white;
+		border: solid 2px @gameContrastColor;
 		padding: 20px;
 	}
 
 	.display-word {
-		background-color: white;
-		color: teal;
-		padding: 5px;
+		display: inline-block;
+		background-color: @gameContrastColor;
+		color: @gameBackgroundColor;
 		text-transform: uppercase;
+		text-align: center;
+		padding: 5px;
+		width: 50%;
 	}
 
 	button {
-		background-color: darkslategray;
-		color: white;
+		background-color: @gameAltBackgroundColor;
+		color: @gameContrastColor;
 	}
 
 	article,

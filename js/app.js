@@ -10,6 +10,7 @@ angular.module('ScrambleApp')
 	// keeping all strings in one place
 	var __strings = {
 		START: "Start typing to guess the unscrambled word",
+		CONTINUE: "See if you can match the unscrambled word",
 		CONGRATS_MATCH: "Congratulations! You matched the word!",
 		SCRAMBLE_START: "",
 		YOUR_GUESS: "",
@@ -105,24 +106,22 @@ angular.module('ScrambleApp')
 		$scope.candidate = document.getElementById("display-guess").value;
 		console.log("$scope.candidate", $scope.candidate);
 
+		// check for matching of user's candidate word and secret word
 		if ($scope.candidate.toUpperCase() == secret.toUpperCase()) {
 			console.log ("match");
+			$scope.result = __strings['CONGRATS_MATCH'];
+
+		} else if ($scope.candidate.length > secret.length) {
+			// check to see if the guess is longer than the original word
+			$scope.result = __strings['TOO_LONG'];
+
+		} else {
+			// encouragement to keep trying
+			$scope.result = __strings['CONTINUE'];
 		}
 	};
 
-	// display initial scrambled word on load
+	// display initial scrambled word on load or 'get new word'
 	$scope.newScrambledWord();
-
-
-	// // Broken out of the word-entry loop
-	// if (matchedWord) {
-	// 	// congratulations
-	// 	$scope.result = __strings['CONGRATS_MATCH'];
-	// } else if ($scope.candidate.length > $scope.scrambled.length) {
-	// 	// you've typed too much
-	// 	$scope.result = __strings['TOO_LONG'];
-	// } else {
-	// 	console.log("This shouldn't happen");
-	// }
 
 }]);

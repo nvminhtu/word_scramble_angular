@@ -15,10 +15,13 @@ body {
   padding: 20px;
 }
 .game .display-word {
+  display: inline-block;
   background-color: white;
   color: teal;
-  padding: 5px;
   text-transform: uppercase;
+  text-align: center;
+  padding: 5px;
+  width: 50%;
 }
 .game button {
   background-color: darkslategray;
