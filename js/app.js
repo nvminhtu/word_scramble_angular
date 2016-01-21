@@ -115,7 +115,7 @@ angular.module('ScrambleApp')
 			// check to see if the guess is longer than the original word
 			$scope.result = __strings['TOO_LONG'];
 
-		} else if (!$scope.candidate.match(textRegEx)) {
+		} else if (!$scope.candidate.match(textRegEx) && $scope.candidate.length !== 0) {
 			// bad input, let the user know, but don't really do anything
 			$scope.result = __strings['INVALID_INPUT'];
 		} else {
