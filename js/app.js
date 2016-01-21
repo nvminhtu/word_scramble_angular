@@ -12,7 +12,8 @@ angular.module('ScrambleApp')
 		CONGRATS_MATCH: "Congratulations! You matched the word!",
 		SCRAMBLE_START: "",
 		YOUR_GUESS: "",
-		TOO_LONG: "Whoops! You've entered more letters than are in the word!"
+		TOO_LONG: "Whoops! You've entered more letters than are in the word!",
+		INVALID_INPUT: "Please only use letters from the alphabet, hyphens (-), and apostrophes (')"
 	};
 
 	// initial values
@@ -20,10 +21,6 @@ angular.module('ScrambleApp')
 	$scope.scrambled = __strings['SCRAMBLE_START'];
 	$scope.result = __strings['START'];
 	$scope.candidate = __strings['YOUR_GUESS'];
-
-	// TODO switch back for testing
-	// var matchedWord = false;
-	var matchedWord = true;
 
 	/**
 	 * get newScrambledWord from wordnik api
@@ -103,6 +100,9 @@ angular.module('ScrambleApp')
 	 */
 	$scope.checkNewInput = function ($event) {
 
+		// to alert the user if they use any non-alphabet, - or ' chars
+		var textRegEx = /^[A-Za-z\-\']+$/;
+
 		// get latest guess (inelegant method, need to do two-way data binding)
 		$scope.candidate = document.getElementById("display-guess").value;
 
@@ -115,6 +115,9 @@ angular.module('ScrambleApp')
 			// check to see if the guess is longer than the original word
 			$scope.result = __strings['TOO_LONG'];
 
+		} else if (!$scope.candidate.match(textRegEx)) {
+			// bad input, let the user know, but don't really do anything
+			$scope.result = __strings['INVALID_INPUT'];
 		} else {
 			// encouragement to keep trying
 			$scope.result = __strings['CONTINUE'];
