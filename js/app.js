@@ -18,9 +18,11 @@ angular.module('ScrambleApp')
 
 	// initial values
 	var secret = '';
-	$scope.scrambled = __strings['SCRAMBLE_START'];
-	$scope.result = __strings['START'];
-	$scope.candidate = __strings['YOUR_GUESS'];
+	$scope.words = {
+		scrambled: __strings['SCRAMBLE_START'],
+		guess: '',
+		result: __strings['START']
+	};
 
 	/**
 	 * get newScrambledWord from wordnik api
@@ -31,10 +33,8 @@ angular.module('ScrambleApp')
 
 		// clear old words if necessary
 		secret = '';
-		$scope.scrambled = '';
-		$scope.candidate = '';
-		// need to replace with two-way data binding 
-		document.getElementById("display-guess").value = '';
+		$scope.words.scrambled = '';
+		$scope.words.guess = '';
 
 		// assemble url for ajax call
 		var maxWordLength = 10;
@@ -62,7 +62,7 @@ angular.module('ScrambleApp')
 		
 			if (secret) {
 				// scramble word and display
-				$scope.scrambled = $scope.scrambleWord(secret);
+				$scope.words.scrambled = $scope.scrambleWord(secret);
 			}
 
 		}, function error(response){
@@ -103,24 +103,26 @@ angular.module('ScrambleApp')
 		// to alert the user if they use any non-alphabet, - or ' chars
 		var textRegEx = /^[A-Za-z\-\']+$/;
 
-		// get latest guess (inelegant method, need to do two-way data binding)
-		$scope.candidate = document.getElementById("display-guess").value;
-
 		// check candidate word for length, match etc.
-		if ($scope.candidate.toUpperCase() == secret.toUpperCase()) {
+		// first handle case of empty field
+		if (!$scope.words.guess) {
+			// encouragement to keep trying
+			$scope.words.result = __strings['CONTINUE'];
+		} else if ($scope.words.guess.toUpperCase() == secret.toUpperCase()) {
 			// check for matching of user's candidate word and secret word
-			$scope.result = __strings['CONGRATS_MATCH'];
+			$scope.words.result = __strings['CONGRATS_MATCH'];
 
-		} else if ($scope.candidate.length > secret.length) {
-			// check to see if the guess is longer than the original word
-			$scope.result = __strings['TOO_LONG'];
-
-		} else if (!$scope.candidate.match(textRegEx) && $scope.candidate.length !== 0) {
+		} else if (!$scope.words.guess.match(textRegEx) && $scope.words.guess.length !== 0) {
 			// bad input, let the user know, but don't really do anything
-			$scope.result = __strings['INVALID_INPUT'];
+			$scope.words.result = __strings['INVALID_INPUT'];
+			
+		} else if ($scope.words.guess.length > secret.length) {
+			// check to see if the guess is longer than the original word
+			$scope.words.result = __strings['TOO_LONG'];
+
 		} else {
 			// encouragement to keep trying
-			$scope.result = __strings['CONTINUE'];
+			$scope.words.result = __strings['CONTINUE'];
 		}
 	};
 

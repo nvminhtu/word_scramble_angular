@@ -23,13 +23,13 @@
 
 		<article ng-controller="GameCtrl">
 			<h2>Scrambled Word</h2>
-			<span id="display-scramble" class="display-word">{{scrambled}}</span>
+			<span id="display-scramble" class="display-word">{{words.scrambled}}</span>
 
 			<h2>Your guess</h2>
-			<input id="display-guess" class="display-word" type="text" value="{{candidate}}" ng-keyup="checkNewInput($event)" autofocus="true">
+			<input id="display-guess" class="display-word" type="text" ng-keyup="checkNewInput($event)" autofocus="true" ng-model="words.guess">
 
 			<br><br>
-			<span id="display-result">{{result}}</span>
+			<span id="display-result">{{words.result}}</span>
 			<br><br>
 
 			<button ng-click="newScrambledWord()">Get New Word</button>
